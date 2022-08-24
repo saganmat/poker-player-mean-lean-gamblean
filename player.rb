@@ -1,6 +1,7 @@
 require_relative "determine_hand_set"
 require_relative "determine_possible_hand_set"
 require_relative "make_play"
+require_relative "card"
 class Player
 
   VERSION = "v0.2.1"
