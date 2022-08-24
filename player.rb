@@ -28,7 +28,8 @@ class Player
 				action: "call",
 				current_funds: current_player["stack"],
 				current_buy_in: game_state["current_buy_in"],
-				current_bet: current_player["bet"]
+				current_bet: current_player["bet"],
+				raise_amount: 0
 			).call
 		else
 			if hand_set.pair
