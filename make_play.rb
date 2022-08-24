@@ -8,7 +8,7 @@ class MakePlay
     @raise_amount = raise_amount
   end
   def call
-    case action
+    case @action
     when "fold"
       0
     when "call"
