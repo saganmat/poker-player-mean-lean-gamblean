@@ -89,7 +89,7 @@ class DetermineHandSet
     potential_threes = ranks.filter { |k, v| v >= 3 }
     if potential_threes.any?
       ranks_of_threes = potential_threes.map{|k,v| k}
-      potential_twos = ranks.filter { |k, v| v >= 2 && !ranks_of_threes.include(k) }
+      potential_twos = ranks.filter { |k, v| v >= 2 && !ranks_of_threes.include?(k) }
       potential_twos.any?
     else
       false
