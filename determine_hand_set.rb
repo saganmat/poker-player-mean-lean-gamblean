@@ -98,15 +98,24 @@ class DetermineHandSet
 
 	def danger_points
 		# if royal? 7
-		if straight_flush? 9
-		elsif four_of_a_kind? 8
-		elsif full_house? 7
-		elsif flush? 6
-		elsif straight? 5
-		elsif three_of_a_kind? 4
-		elsif two_pairs? 3
-		elsif pair? 2
-		elsif high_card? 1
+		if straight_flush?
+      9
+		elsif four_of_a_kind?
+      8
+		elsif full_house?
+      7
+		elsif flush?
+      6
+		elsif straight?
+      5
+		elsif three_of_a_kind?
+      4
+		elsif two_pairs?
+      3
+		elsif pair?
+      2
+		elsif high_card?
+      1
 		end
 		0
 	end
