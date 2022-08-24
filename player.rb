@@ -1,7 +1,7 @@
 
 class Player
 
-  VERSION = "v0.1"
+  VERSION = "v0.1.2"
 
   def bet_request(game_state)
     current_player = game_state["players"].filter { |player| player["name"].eql?("Mean Lean Gamblean") }.first
