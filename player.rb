@@ -48,7 +48,7 @@ class Player
 					current_bet: current_player["bet"],
 					raise_amount: raise_amount + bet_increment
 				).call
-			elsif hand_set.four_of_a_kind?
+			elsif hand_set.four_of_a_kind? || hand_set.full_house?
 				::MakePlay.new(
 					action: "raise",
 					current_funds: current_player["stack"],
