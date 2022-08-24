@@ -4,7 +4,7 @@ require_relative "make_play"
 require_relative "card"
 class Player
 
-  VERSION = "v0.4.FTW"
+  VERSION = "v0.5.FTW"
 
   def bet_request(game_state)
 
@@ -62,14 +62,34 @@ class Player
 			end
 
 			if hand_set.danger_points > highest_competitor_danger_points
-				bet_increment = game_state["minimum_raise"] + (game_state["minimum_raise"] * (danger_points * 0.5)).ceil
-				::MakePlay.new(
-					action: "raise",
-					current_funds: current_player["stack"],
-					current_buy_in: game_state["current_buy_in"],
-					current_bet: current_player["bet"],
-					raise_amount: raise_amount + bet_increment
-				).call
+				danger_offset = hand_set.danger_points - highest_competitor_danger_points
+				if(danger_offset > 3)
+					bet_increment = game_state["minimum_raise"] + (game_state["minimum_raise"] * (danger_offset)).ceil
+					::MakePlay.new(
+						action: "raise",
+						current_funds: current_player["stack"],
+						current_buy_in: game_state["current_buy_in"],
+						current_bet: current_player["bet"],
+						raise_amount: raise_amount + bet_increment
+					).call
+				elsif(danger_offset <= 0)
+					::MakePlay.new(
+						action: "fold",
+						current_funds: current_player["stack"],
+						current_buy_in: game_state["current_buy_in"],
+						current_bet: current_player["bet"],
+						raise_amount: raise_amount
+					).call
+				else
+					bet_increment = game_state["minimum_raise"] + (game_state["minimum_raise"] * (danger_points * 0.5)).ceil
+					::MakePlay.new(
+						action: "raise",
+						current_funds: current_player["stack"],
+						current_buy_in: game_state["current_buy_in"],
+						current_bet: current_player["bet"],
+						raise_amount: raise_amount + bet_increment
+					).call
+				end
 			else
 				::MakePlay.new(
 					action: "fold",
