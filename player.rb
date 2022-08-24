@@ -4,7 +4,7 @@ require_relative "make_play"
 require_relative "card"
 class Player
 
-  VERSION = "v0.3.2"
+  VERSION = "v0.4.1"
 
   def bet_request(game_state)
 
@@ -29,8 +29,6 @@ class Player
       current_player["stack"]
     end
 
-		bet_increment = 2 * game_state["minimum_raise"]
-
 		if current_combination.count < 7
 			::MakePlay.new(
 				action: "call",
@@ -40,29 +38,22 @@ class Player
 				raise_amount: 0
 			).call
 		else
-			if hand_set.pair?
-				::MakePlay.new(
-					action: "raise",
-					current_funds: current_player["stack"],
-					current_buy_in: game_state["current_buy_in"],
-					current_bet: current_player["bet"],
-					raise_amount: raise_amount
-				).call
-			elsif hand_set.two_pairs? || hand_set.three_of_a_kind? || hand_set.flush?
+			highest_competitor_danger_points = 0
+			game_state["players"].each(|player|
+				competitor_hand_set = ::DetermineHandSet.new(player["hole_cards"])
+				if competitor_hand_set.danger_points > highest_competitor_danger_points
+					highest_competitor_danger_points = competitor_hand_set.danger_points
+				end
+			)
+
+			if hand_set.danger_points > highest_competitor_danger_points
+				bet_increment = game_state["minimum_raise"] + (game_state["minimum_raise"] * (danger_points * 0.1)).ceil
 				::MakePlay.new(
 					action: "raise",
 					current_funds: current_player["stack"],
 					current_buy_in: game_state["current_buy_in"],
 					current_bet: current_player["bet"],
 					raise_amount: raise_amount + bet_increment
-				).call
-			elsif hand_set.four_of_a_kind? || hand_set.full_house?
-				::MakePlay.new(
-					action: "raise",
-					current_funds: current_player["stack"],
-					current_buy_in: game_state["current_buy_in"],
-					current_bet: current_player["bet"],
-					raise_amount: raise_amount + (bet_increment * 2)
 				).call
 			else
 				::MakePlay.new(
