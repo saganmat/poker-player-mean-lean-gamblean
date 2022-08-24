@@ -13,7 +13,7 @@ class Player
     community_cards = game_state["community_cards"]
 
     current_combination = current_hole_cards + community_cards
-    hand_set = ::DetermineHandSet.new(current_combination).call
+    hand_set = ::DetermineHandSet.new(current_combination)
 
     raise_amount = if current_player["stack"] >= game_state["minimum_raise"]
       game_state["minimum_raise"]
