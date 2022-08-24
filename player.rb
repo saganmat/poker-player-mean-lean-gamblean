@@ -39,12 +39,18 @@ class Player
 			).call
 		else
 			highest_competitor_danger_points = 0
-			game_state["players"].each(|player|
-				competitor_hand_set = ::DetermineHandSet.new(player["hole_cards"])
+			game_state["players"].each do |player|
+        competitor_hand = []
+
+        player["hole_cards"].eachd do |card|
+          competitor_hand << Card.new(rank: card["rank"], suit: card["suit"])
+        end
+
+				competitor_hand_set = ::DetermineHandSet.new(competitor_hand)
 				if competitor_hand_set.danger_points > highest_competitor_danger_points
 					highest_competitor_danger_points = competitor_hand_set.danger_points
 				end
-			)
+			end
 
 			if hand_set.danger_points > highest_competitor_danger_points
 				bet_increment = game_state["minimum_raise"] + (game_state["minimum_raise"] * (danger_points * 0.1)).ceil
