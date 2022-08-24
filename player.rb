@@ -42,7 +42,7 @@ class Player
 			game_state["players"].each do |player|
         competitor_hand = []
 
-        player["hole_cards"].eachd do |card|
+        player["hole_cards"].each do |card|
           competitor_hand << Card.new(rank: card["rank"], suit: card["suit"])
         end
 
