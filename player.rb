@@ -40,7 +40,7 @@ class Player
 		else
 			highest_competitor_danger_points = 0
 			game_state["players"].each do |player|
-        next unless player["hole_cards"].present?
+        next if player["hole_cards"].nil?
         competitor_hand = []
 
         player["hole_cards"].each do |card|
