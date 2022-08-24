@@ -32,7 +32,7 @@ class Player
 				raise_amount: 0
 			).call
 		else
-			if hand_set.pair
+			if hand_set.pair?
 				::MakePlay.new(
 					action: "raise",
 					current_funds: current_player["stack"],
@@ -40,7 +40,7 @@ class Player
 					current_bet: current_player["bet"],
 					raise_amount: raise_amount
 				).call
-			elsif hand_set.two_pairs || hand_set.three_of_a_kind || hand_set.flush
+			elsif hand_set.two_pairs? || hand_set.three_of_a_kind? || hand_set.flush?
 				::MakePlay.new(
 					action: "raise",
 					current_funds: current_player["stack"],
@@ -48,7 +48,7 @@ class Player
 					current_bet: current_player["bet"],
 					raise_amount: raise_amount + bet_increment
 				).call
-			elsif hand_set.four_of_a_kind
+			elsif hand_set.four_of_a_kind?
 				::MakePlay.new(
 					action: "raise",
 					current_funds: current_player["stack"],
