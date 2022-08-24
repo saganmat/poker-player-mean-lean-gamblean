@@ -4,7 +4,7 @@ require_relative "make_play"
 require_relative "card"
 class Player
 
-  VERSION = "v0.5.GREEDY"
+  VERSION = "v0.5.FTW"
 
   def bet_request(game_state)
 
@@ -36,16 +36,6 @@ class Player
 				current_buy_in: game_state["current_buy_in"],
 				current_bet: current_player["bet"],
 				raise_amount: 0
-			).call
-		elsif current_combination.count == 2 && hand_set.danger_points == 2
-      bet_increment = 50
-
-      ::MakePlay.new(
-				action: "raise",
-				current_funds: current_player["stack"],
-				current_buy_in: game_state["current_buy_in"],
-				current_bet: current_player["bet"],
-				raise_amount: raise_amount + bet_increment
 			).call
 		elsif current_combination.count == 5 && hand_set.danger_points < 2
 			::MakePlay.new(
