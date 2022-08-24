@@ -4,7 +4,7 @@ require_relative "make_play"
 require_relative "card"
 class Player
 
-  VERSION = "v0.4.1"
+  VERSION = "v0.4.FTW"
 
   def bet_request(game_state)
 
@@ -62,7 +62,7 @@ class Player
 			end
 
 			if hand_set.danger_points > highest_competitor_danger_points
-				bet_increment = game_state["minimum_raise"] + (game_state["minimum_raise"] * (danger_points * 0.1)).ceil
+				bet_increment = game_state["minimum_raise"] + (game_state["minimum_raise"] * (danger_points * 0.5)).ceil
 				::MakePlay.new(
 					action: "raise",
 					current_funds: current_player["stack"],
