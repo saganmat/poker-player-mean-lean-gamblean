@@ -3,7 +3,7 @@ require_relative "determine_possible_hand_set"
 require_relative "make_play"
 class Player
 
-  VERSION = "v0.2"
+  VERSION = "v0.2.1"
 
   def bet_request(game_state)
     current_player = game_state["players"][game_state["in_action"]]
@@ -19,13 +19,31 @@ class Player
       current_player["stack"]
     end
 
-    ::MakePlay.new(
-      action: "call",
-      current_funds: current_player["stack"],
-      current_buy_in: game_state["current_buy_in"],
-      current_bet: current_player["bet"],
-      raise_amount: raise_amount
-    ).call
+    if current_hole_cards.any?{ |c| (%w[J Q K A 10]).include?(c["rank"]) }
+      ::MakePlay.new(
+        action: "raise",
+        current_funds: current_player["stack"],
+        current_buy_in: game_state["current_buy_in"],
+        current_bet: current_player["bet"],
+        raise_amount: raise_amount
+      ).call
+    elsif current_hole_cards.none?{ |c| (%w[J Q K A 10]).include?(c["rank"]) }
+      ::MakePlay.new(
+        action: "fold",
+        current_funds: current_player["stack"],
+        current_buy_in: game_state["current_buy_in"],
+        current_bet: current_player["bet"],
+        raise_amount: raise_amount
+      ).call
+    else
+      ::MakePlay.new(
+        action: "call",
+        current_funds: current_player["stack"],
+        current_buy_in: game_state["current_buy_in"],
+        current_bet: current_player["bet"],
+        raise_amount: raise_amount
+      ).call
+    end
   end
 
   def showdown(game_state)
