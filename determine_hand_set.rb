@@ -5,6 +5,7 @@ class DetermineHandSet
   end
 
   def call
+    @cards
     # It should return an array like
     # [
     # { "pair" => [{"suit" => "hearts", "rank" => "7"}, {"suit" => "spades", "rank" => "7"}] }
