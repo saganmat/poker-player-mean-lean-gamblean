@@ -29,7 +29,7 @@ class Player
       current_player["stack"]
     end
 
-		if current_combination.count < 7
+		if current_combination.count < 5
 			::MakePlay.new(
 				action: "call",
 				current_funds: current_player["stack"],
@@ -37,7 +37,15 @@ class Player
 				current_bet: current_player["bet"],
 				raise_amount: 0
 			).call
-		else
+		elsif current_combination.count == 5 && hand_set.danger_points < 2
+			::MakePlay.new(
+				action: "fold",
+				current_funds: current_player["stack"],
+				current_buy_in: game_state["current_buy_in"],
+				current_bet: current_player["bet"],
+				raise_amount: 0
+			).call
+		elsif current_combination.count <= 7
 			highest_competitor_danger_points = 0
 			game_state["players"].each do |player|
         next if player["hole_cards"].nil?
