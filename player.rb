@@ -8,11 +8,19 @@ class Player
 
   def bet_request(game_state)
 
-		current_player = game_state["players"][game_state["in_action"]]
+    current_player = game_state["players"][game_state["in_action"]]
     current_hole_cards = current_player["hole_cards"]
     community_cards = game_state["community_cards"]
+    current_combination = []
 
-    current_combination = current_hole_cards + community_cards
+    current_hole_cards.each do |card|
+      current_combination << Card.new(rank: card["rank"], suit: card["suit"])
+    end
+
+    community_cards.each do |card|
+      current_combination << Card.new(rank: card["rank"], suit: card["suit"])
+    end
+
     hand_set = ::DetermineHandSet.new(current_combination)
 
     raise_amount = if current_player["stack"] >= game_state["minimum_raise"]
