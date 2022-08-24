@@ -18,7 +18,7 @@ class DetermineHandSet
   end
 
 	def high_card?
-		@cards.none?{ |c| (%w[J Q K A 10]).include?(c["rank"]) }
+		@cards.none?{ |c| (%w[J Q K A 10]).include?(c.rank) }
 	end
 
   def pair?
