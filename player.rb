@@ -9,7 +9,7 @@ class Player
     community_cards = game_state["community_cards"]
 
     current_combination = current_hole_cards + community_cards
-    hand_set = DetermineHandSet.new(current_combination).call
+    hand_set = ::DetermineHandSet.new(current_combination).call
 
     0
   end
