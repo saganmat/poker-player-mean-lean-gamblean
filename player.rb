@@ -1,4 +1,5 @@
-
+require_relative "determine_hand_set"
+require_relative "determine_possible_hand_set"
 class Player
 
   VERSION = "v0.1.2"
