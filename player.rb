@@ -4,7 +4,7 @@ require_relative "make_play"
 require_relative "card"
 class Player
 
-  VERSION = "v0.3.1"
+  VERSION = "v0.3.2"
 
   def bet_request(game_state)
 
