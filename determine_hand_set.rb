@@ -60,6 +60,26 @@ class DetermineHandSet
     counter == 5
   end
 
+  def straight_flush?
+    counter = 0
+    @cards.each_with_index do |card, index|
+      break if counter == 4
+      break if index == @cards.count - 1
+
+      next_card = @cards[index+1]
+      distance_from_next_card = card.distance_from(next_card)
+
+      p "#{card.rank} is #{distance_from_next_card} away from #{next_card.rank}"
+
+      if distance_from_next_card == 1 && card.suit.eql?(next_card.suit)
+        counter += 1
+      else
+        counter = 0
+      end
+    end
+    counter == 4
+  end
+
   def full_house?
     ranks = @cards.collect { |c| c.rank}.tally
     potential_threes = ranks.filter { |k, v| v >= 3 }
